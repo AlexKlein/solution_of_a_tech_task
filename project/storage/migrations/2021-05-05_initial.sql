@@ -1,16 +1,16 @@
 create schema if not exists stage;
 create table if not exists stage.metadata (json_text  text,
                                            created_at date);
-create table if not exists stage.rating (user_id          varchar(14),
-                                         item             varchar(10),
+create table if not exists stage.rating (user_id          varchar(128),
+                                         item             varchar(32),
                                          rating           numeric,
                                          event_timestamp  numeric,
                                          created_at       date);
 create schema if not exists core;
-create table if not exists core.metadata (asin  varchar(10),
+create table if not exists core.metadata (asin  varchar(32),
                                           title varchar(512));
-create table if not exists core.rating (user_id          varchar(14),
-                                        item             varchar(10),
+create table if not exists core.rating (user_id          varchar(128),
+                                        item             varchar(32),
                                         rating           numeric,
                                         event_timestamp  timestamp) partition by range (event_timestamp);
 create table if not exists core.rating_y1900 partition of core.rating

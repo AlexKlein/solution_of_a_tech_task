@@ -20,8 +20,8 @@ def insert_set(data_source, model_name):
     try:
         model_name.create(**data_source)
     except Exception as e:
-        logger.error(f"""Data model exception: {e}""")
-        print(f"""Data model exception: {e}""")
+        logger.error(f"""Model: {model_name.__name__} Data: {data_source}""")
+        print(f"""Model: {model_name.__name__} Data: {data_source}""")
 
 
 def upload_files(model_name, headers, file_name):
