@@ -3,7 +3,6 @@ Download and unzip files from external sources as raw data.
 """
 import gzip
 import shutil
-from os import getcwd
 from os.path import join
 
 import requests
@@ -15,7 +14,7 @@ from common.logger import logging
 logger = logging.getLogger(__name__)
 
 
-FILES_DIR_PATH = join(join(getcwd(), 'storage'), 'data')
+FILES_DIR_PATH = config.FILES_DIR_PATH
 METADATA_LINK = config.LINKS['METADATA']
 RATINGS_LINK = config.LINKS['RATINGS']
 

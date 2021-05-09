@@ -1,15 +1,14 @@
 """
 Main point of logging of the process.
 """
-from os import getcwd
 import logging as pylogging
 from logging import handlers
-from os.path import join
 
+import settings as config
 from .singleton import Singleton
 
 
-LOG_FILE = join(join(join(getcwd(), 'storage'), 'logs'), 'output.log')
+LOG_FILE = config.LOG_FILE
 
 
 class Logging(object):

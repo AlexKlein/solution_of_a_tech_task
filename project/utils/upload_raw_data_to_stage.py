@@ -3,9 +3,9 @@ An ETL process for uploading CSV and JSON files to a PostgreSQL DB.
 """
 import csv
 import datetime
-from os import getcwd
 from os.path import join
 
+import settings as config
 from common.logger import logging
 from models import stage_models as models
 
@@ -13,7 +13,7 @@ from models import stage_models as models
 logger = logging.getLogger(__name__)
 
 
-CSV_FILES_DIR_PATH = join(join(getcwd(), 'storage'), 'data')
+FILES_DIR_PATH = config.FILES_DIR_PATH
 
 
 def insert_set(data_source, model_name):
@@ -27,7 +27,7 @@ def insert_set(data_source, model_name):
 def upload_files(model_name, headers, file_name):
     rows_counter = 0
     try:
-        with open(join(CSV_FILES_DIR_PATH, file_name), newline='') as f:
+        with open(join(FILES_DIR_PATH, file_name), newline='') as f:
             logger.info(f"""Inserting data to {model_name.__name__}""")
             print(f"""Inserting data to {model_name.__name__}""")
 
@@ -50,7 +50,7 @@ def upload_files(model_name, headers, file_name):
 def upload_jsons(model_name, headers, file_name):
     rows_counter = 0
     try:
-        with open(join(CSV_FILES_DIR_PATH, file_name), newline='') as f:
+        with open(join(FILES_DIR_PATH, file_name), newline='') as f:
             logger.info(f"""Inserting data to {model_name.__name__}""")
             print(f"""Inserting data to {model_name.__name__}""")
 

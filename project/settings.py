@@ -3,7 +3,6 @@ Settings for the app.
 """
 import os
 
-
 VERSION = '0.1'
 DATABASE = {
     'ENGINE': 'psycopg2',
@@ -17,3 +16,5 @@ LINKS = {
     'METADATA': 'http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Movies_and_TV.json.gz',
     'RATINGS': 'http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Movies_and_TV.csv'
 }
+LOG_FILE = '/tmp/etl_project/log/output.log'
+FILES_DIR_PATH = '/tmp/etl_project/data'
