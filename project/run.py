@@ -44,7 +44,7 @@ def delay_db():
         sys.exit(1)
 
 
-if __name__ == '__main__':
+def start_app():
     warnings.simplefilter(action='ignore')
 
     logger.info(f"""Start process""")

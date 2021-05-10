@@ -1,16 +1,22 @@
 """
-A runner of the ETL process from MySQL to PostgreSQL.
+A runner of the ETL process.
 """
+import sys
 from datetime import datetime, timedelta
 
 from airflow import DAG
-from airflow.operators import BashOperator
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
+
+sys.path.insert(0, "/usr/local/airflow/app")
+
+from run import start_app
 
 
 default_args = {
     'owner': 'AlexKlein',
     'depends_on_past': False,
-    'start_date': datetime(2021, 7, 5),
+    'start_date': datetime(2021, 7, 6),
     'email': ['no-reply@gmail.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -18,21 +24,22 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-dag = DAG(
-    'etl_runner',
-    default_args=default_args,
-    description='A runner for ETL tool',
-    schedule_interval=timedelta(days=1),
-)
 
-t1 = BashOperator(
-    task_id='start_etl',
-    bash_command='python /usr/local/airflow/app/run.py',
-    dag=dag)
+with DAG('etl_runner',
+         description='A runner for ETL tool',
+         start_date=datetime(2021, 5, 7),
+         schedule_interval=timedelta(days=1),
+         max_active_runs=1,
+         catchup=False) as dag:
 
-dag.doc_md = __doc__
+    t0 = DummyOperator(task_id='dummy_task',
+                       retries=3)
+    t1 = PythonOperator(task_id='python_task',
+                        python_callable=start_app,
+                        dag=dag)
+    t1.doc_md = """\
+        #### Task Documentation
+        This is a runner for ETL processes.
+        """
 
-t1.doc_md = """\
-#### Task Documentation
-This is a runner for ETL processes.
-"""
+    t0 >> t1
